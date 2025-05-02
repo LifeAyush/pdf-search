@@ -1,113 +1,211 @@
-# Astral PDF Search Challenge - Getting Started!
+# 📄 PDF Search Application
 
-1. `bun i` to install deps
-2. `bun dev` to start local dev environment
-3. Ensure to add .example.env environment variables for supabase to work
-4. Visit `/` route on localhost to see the mock UI
+A full-stack web application to search, preview, and print relevant pages from publicly available PDFs. Built with **Next.js**, **React**, **TypeScript**, **Tailwind CSS**, and **Supabase**. Utilizes **Google Custom Search API** for external indexing and **pdf.js / pdf-lib** for client-side PDF processing.
 
-# Default README
+---
 
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
-</a>
+## 🔍 Features
 
-<p align="center">
- The fastest way to build apps with Next.js and Supabase
-</p>
+- 🔎 **Search PDFs** using Google Custom Search API (CSE)
+- 🧠 **Identify relevant pages** from each PDF using keyword-based content scanning
+- 🖼️ **Preview first page** of each PDF result (rendered via `pdf.js`)
+- 🖨️ **Print selected pages** from identified PDFs using `pdf-lib`
+- ⚡ **Real-time search updates** with streaming API support
+- 🕓 **Persistent search history** saved to Supabase PostgreSQL
+- 🌐 **Environment-agnostic** deployment (local dev, Vercel-ready)
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
-<br/>
+---
 
-## Features
+## 🧱 Tech Stack
 
-- Works across the entire [Next.js](https://nextjs.org) stack
-  - App Router
-  - Pages Router
-  - Middleware
-  - Client
-  - Server
-  - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Components with [shadcn/ui](https://ui.shadcn.com/)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
+| Layer        | Stack                                                  |
+|--------------|--------------------------------------------------------|
+| Frontend     | Next.js (App Router), React 18, Tailwind CSS, TypeScript |
+| Backend API  | Next.js API Routes                                     |
+| Database     | Supabase (PostgreSQL)                                  |
+| PDF Engine   | [pdf.js](https://mozilla.github.io/pdf.js/), [pdf-lib](https://pdf-lib.js.org/) |
+| Search API   | Google Programmable Search Engine                      |
+| Hosting      | Vercel (or self-hosted)                                |
 
-## Demo
+---
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
+## ⚙️ Prerequisites
 
-## Deploy to Vercel
+1. **Supabase Account** – [Create Supabase Project](https://app.supabase.com/)
+2. **Google CSE Key** – [Setup Programmable Search Engine](https://programmablesearchengine.google.com/)
+3. *(Optional)* **Vercel Account** – for zero-config deployment
 
-Vercel deployment will guide you through creating a Supabase account and project.
+---
 
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
+## 🚀 Getting Started
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This+starter+configures+Supabase+Auth+to+use+cookies%2C+making+the+user%27s+session+available+throughout+the+entire+Next.js+app+-+Client+Components%2C+Server+Components%2C+Route+Handlers%2C+Server+Actions+and+Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png)
+### 1. Clone Repository
 
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
+```bash
+git clone <repository-url>
+cd pdf-search
+```
 
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
+### 2. Install Dependencies
 
-## Clone and run locally
+```bash
+npm install
+# or
+yarn install
+# or
+bun install
+```
 
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
+### 3. Configure Environment Variables
 
-2. Create a Next.js app using the Supabase Starter template npx command
+Copy and edit `.env.local`:
 
-   ```bash
-   npx create-next-app --example with-supabase with-supabase-app
-   ```
+```bash
+cp .env.example .env.local
+```
 
-   ```bash
-   yarn create next-app --example with-supabase with-supabase-app
-   ```
+| Variable                     | Description                               |
+|-----------------------------|-------------------------------------------|
+| NEXT_PUBLIC_SUPABASE_URL    | Supabase project URL                      |
+| NEXT_PUBLIC_SUPABASE_ANON_KEY | Supabase public anon key                 |
+| SUPABASE_SERVICE_ROLE_KEY   | Supabase server-side secret key (API use) |
+| GOOGLE_CSE_ID               | Google Programmable Search Engine ID      |
+| GOOGLE_API_KEY              | Google API Key with Search API enabled    |
 
-   ```bash
-   pnpm create next-app --example with-supabase with-supabase-app
-   ```
+---
 
-3. Use `cd` to change into the app's directory
+### 4. Initialize Supabase Schema
 
-   ```bash
-   cd with-supabase-app
-   ```
+Use Supabase SQL Editor and run:
 
-4. Rename `.env.example` to `.env.local` and update the following:
+```sql
+-- scripts/create-tables.sql
+CREATE TABLE searches (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  query TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=[INSERT SUPABASE PROJECT API ANON KEY]
-   ```
+CREATE TABLE search_results (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  search_id UUID REFERENCES searches(id),
+  url TEXT NOT NULL,
+  title TEXT,
+  description TEXT,
+  total_pages INTEGER,
+  relevant_pages JSONB,
+  preview_image_url TEXT,
+  cached_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
 
-   Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` can be found in [your Supabase project's API settings](https://app.supabase.com/project/_/settings/api)
+> ✅ Enable **Row-Level Security** and create appropriate policies for read/write access using the service role key only.
 
-5. You can now run the Next.js local development server:
+---
 
-   ```bash
-   npm run dev
-   ```
+### 5. Run the Development Server
 
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
+```bash
+npm run dev
+# or
+yarn dev
+# or
+bun dev
+```
 
-6. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
+Visit [http://localhost:3000](http://localhost:3000)
 
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
+---
 
-## Feedback and issues
+## 🧩 API Routes
 
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
+| Endpoint               | Method | Description                                  |
+|------------------------|--------|----------------------------------------------|
+| `/api/search`          | POST   | Trigger Google CSE with user query           |
+| `/api/history`         | GET    | Retrieve user search history                 |
+| `/api/results/[id]`    | GET    | Fetch results for a specific search ID       |
+| `/api/pdf-preview`     | GET    | Render preview of PDF’s first page           |
+| `/api/print`           | POST   | Return a trimmed PDF with selected pages     |
 
-## More Supabase examples
+---
 
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+## 🛠 PDF Handling Logic
+
+- **Parsing**: PDFs fetched as blob streams, rendered via `pdf.js`
+- **Keyword Mapping**: Regex-based scanning in browser
+- **Preview**: Rendered to `<canvas>` as thumbnail
+- **Print**: Recompiled PDF using selected pages via `pdf-lib`
+
+---
+
+## 📊 Database Overview
+
+### Table: `searches`
+
+| Column      | Type      | Notes                      |
+|-------------|-----------|----------------------------|
+| id          | UUID      | Primary key                |
+| query       | TEXT      | Search string              |
+| created_at  | TIMESTAMP | Auto-generated             |
+
+### Table: `search_results`
+
+| Column            | Type      | Notes                                |
+|-------------------|-----------|--------------------------------------|
+| id                | UUID      | Primary key                          |
+| search_id         | UUID      | Foreign key referencing `searches.id`|
+| url               | TEXT      | Direct PDF URL                       |
+| title             | TEXT      | PDF title                            |
+| description       | TEXT      | Snippet or abstract                  |
+| total_pages       | INTEGER   | Page count from `pdf.js`             |
+| relevant_pages    | JSONB     | List of relevant page indices        |
+| preview_image_url | TEXT      | Optional CDN link for preview        |
+| cached_at         | TIMESTAMP | Result cache timestamp               |
+
+---
+
+## 🧪 Future Enhancements
+
+- 🔍 **Semantic Search**: Use OpenAI or Pinecone for vector similarity
+- 🔐 **User Accounts**: Supabase Auth + OAuth support
+- 🧾 **OCR Support**: Tesseract.js for scanned documents
+- 🧷 **Batch Print/Download**: Combine or zip multiple PDFs
+- 📤 **Export**: Pages/annotations to `.md`, `.txt`, `.csv`
+- 📈 **Analytics Dashboard**: Built with Supabase
+
+---
+
+## 🚀 Deployment (Vercel)
+
+1. Push code to GitHub
+2. Import repository in [Vercel](https://vercel.com)
+3. Add environment variables in Vercel dashboard
+4. Deploy 🎉
+
+---
+
+## 🔐 Security
+
+- Supabase access is scoped through the **service-role** key for backend API usage only
+- **Row-Level Security (RLS)** enforces isolation and safety
+- PDF parsing and printing is **client-side only** to reduce server cost and enhance privacy
+
+---x
+
+## 📦 Limitations
+
+- Only **public PDFs indexed by Google** are accessible
+- No support for **encrypted/password-protected PDFs**
+- No content **deduplication** logic implemented yet
+
+---
+
+## 🧮 TODO
+
+- ✅ Unit tests for page relevance algorithm
+- ✅ Supabase function for deduplication
+- ✅ Rate-limiting middleware for `/api/search`
+
+---
+
+Made with ❤️ using open web tools by ayush.
