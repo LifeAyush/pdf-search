@@ -42,7 +42,7 @@ A full-stack web application to search, preview, and print relevant pages from p
 ### 1. Clone Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/LifeAyush/pdf-search
 cd pdf-search
 ```
 

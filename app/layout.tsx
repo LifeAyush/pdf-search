@@ -17,8 +17,8 @@ const getBaseUrl = (): string => {
 // Configure metadata
 export const metadata = {
   metadataBase: new URL(getBaseUrl()),
-  title: "AI PDF Challenge",
-  description: "AI-powered PDF processing application",
+  title: "PDF Search",
+  description: "Search public PDFs, preview relevant pages, and print them.",
   icons: {
     icon: '/favicon.ico',
   },
